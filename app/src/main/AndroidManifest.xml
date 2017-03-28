@@ -15,6 +15,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="850147693f19ed33940d513773978d78d04256d5" />
     </application>
 
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
