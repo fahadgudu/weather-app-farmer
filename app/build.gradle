@@ -40,6 +40,8 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            ext.betaDistributionReleaseNotes=releaseNotes
+            ext.betaDistributionGroupAliases="ci-qa"
             signingConfig signingConfigs.config
         }
         debug {
@@ -52,8 +54,6 @@ android {
         }
         staging {
             signingConfig signingConfigs.config
-            ext.betaDistributionReleaseNotes=releaseNotes
-            ext.betaDistributionGroupAliases="ci-qa"
         }
         production {
             signingConfig signingConfigs.config
