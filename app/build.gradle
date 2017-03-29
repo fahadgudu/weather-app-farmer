@@ -14,6 +14,7 @@ repositories {
     maven { url 'https://maven.fabric.io/public' }
 }
 
+def releaseNotes = 'git log --pretty=format:"%s" --since "yesterday"'.execute([], project.rootDir).text.trim()
 
 android {
     signingConfigs {
@@ -51,6 +52,8 @@ android {
         }
         staging {
             signingConfig signingConfigs.config
+            ext.betaDistributionReleaseNotes=releaseNotes
+            ext.betaDistributionGroupAliases="ci-qa"
         }
         production {
             signingConfig signingConfigs.config
