@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><!-- activity_screen_slide.xml -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/viewpager_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="10dp"
+        android:padding="5dp"
+        android:visibility="visible"
+        app:fillColor="#000000"
+        app:pageColor="@android:color/transparent"
+        app:radius="5dp" />
+</FrameLayout>

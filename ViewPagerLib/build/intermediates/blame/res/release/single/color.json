@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "/Volumes/Media/AndroidStudioProjects/CIAndroid/CIAndroid/ViewPagerLib/build/intermediates/res/merged/release/color/vpi__dark_theme.xml",
+        "source": "/Volumes/Media/AndroidStudioProjects/CIAndroid/CIAndroid/ViewPagerLib/src/main/res/color/vpi__dark_theme.xml"
+    },
+    {
+        "merged": "/Volumes/Media/AndroidStudioProjects/CIAndroid/CIAndroid/ViewPagerLib/build/intermediates/res/merged/release/color/vpi__light_theme.xml",
+        "source": "/Volumes/Media/AndroidStudioProjects/CIAndroid/CIAndroid/ViewPagerLib/src/main/res/color/vpi__light_theme.xml"
+    }
+]
