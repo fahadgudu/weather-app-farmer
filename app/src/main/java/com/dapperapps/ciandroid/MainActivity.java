@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
@@ -28,7 +29,6 @@ import java.util.List;
 import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
-import pl.droidsonroids.gif.GifDrawable;
 
 import static com.dapperapps.receiver.WeatherConditions.mHmWeatherInfo;
 
@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mTvWeatherSummary;
     TextView mTvWindValue;
     TextView mTvHumidityValue;
-
+    VideoView mVvHomeBg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
 
         mIvWeatherInfo.setImageResource(R.drawable.blizzard);
 
+        mVvHomeBg = (VideoView) findViewById(R.id.vv_home_bg);
+
 
 
         String str = "Sent from your Twillio trial account[ \"Dry:1:0:0:33:0:0:0.19:7.62:42\", \"Drizzle in the morning.:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"Mostly cloudy until afternoon and dry throughout the day.:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"Mostly cloudy until evening.:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"Mostly cloudy in the morning.:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"Drizzle in the morning.:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"Partly cloudy starting in the evening and dry throughout the day.:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"Partly cloudy starting in the evening and dry throughout the day.:9:0:0:0:37:22:0.25:5.35:24\", \"Dry throughout the day and partly cloudy in the afternoon.:8:0:0:0:38:23:0.2:2.77:51\" ]";
@@ -87,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
             String[] parts = items.get(0).split(":");
 
             mTvPrecipIntensity.setText(parts[2]+ " inch/h");
-            mTvPrecipProbability.setText((int) (Float.parseFloat(parts[3])*100) +"%");
+            mTvPrecipProbability.setText((int) (Float.parseFloat(parts[3])*1) +"%");
             mTvTemperature.setText(parts[4]);
-            mTvApparentTemperatureMax.setText("Max "+ parts[5]);
-            mTvApparentTemperatureMin.setText("Min "+parts[6]);
+            mTvApparentTemperatureMax.setText(" زیادہ سے زیادہ "+ parts[5]);
+            mTvApparentTemperatureMin.setText(" کم از کم "+parts[6]);
             mTvWindSpeed.setText(parts[8]);
             mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
 
@@ -101,45 +103,74 @@ public class MainActivity extends AppCompatActivity {
 
             if(Integer.parseInt(parts[4])<3) {
                 //blue
-                mRlWeather.setBackgroundColor(Color.parseColor("#668cff"));
+                mRlWeather.setBackgroundColor(Color.parseColor("#80668cff"));
             }
             else if(Integer.parseInt(parts[4])>3 && Integer.parseInt(parts[4])<10) {
                 //dark blue
-                mRlWeather.setBackgroundColor(Color.parseColor("#3333ff"));
+                mRlWeather.setBackgroundColor(Color.parseColor("#803333ff"));
             } else if (Integer.parseInt(parts[4])>10&&Integer.parseInt(parts[4])<30) {
                 //orange
-                mRlWeather.setBackgroundColor(Color.parseColor("#ffa500"));
+                mRlWeather.setBackgroundColor(Color.parseColor("#80ffa500"));
             } else {
                 //red
-                mRlWeather.setBackgroundColor(Color.parseColor("#CCff0000"));
+                mRlWeather.setBackgroundColor(Color.parseColor("#99ff0000"));
             }
+            String uri = "android.resource://" + getPackageName() + "/"
+                    + R.raw.sleet;
             if(Integer.parseInt(parts[1])==0) {
                 mIvWeatherInfo.setImageResource(R.drawable.clear_day);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.clear_day;
             } else if(Integer.parseInt(parts[1])==1) {
                 mIvWeatherInfo.setImageResource(R.drawable.clear_night);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.clear_night;
             } else if(Integer.parseInt(parts[1])==2) {
                 mIvWeatherInfo.setImageResource(R.drawable.rain);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.rain;
             } else if(Integer.parseInt(parts[1])==3) {
                 mIvWeatherInfo.setImageResource(R.drawable.snow);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.snow;
             } else if(Integer.parseInt(parts[1])==4) {
                 mIvWeatherInfo.setImageResource(R.drawable.sleet);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.sleet;
             } else if(Integer.parseInt(parts[1])==5) {
                 mIvWeatherInfo.setImageResource(R.drawable.wind);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.wind;
             } else if(Integer.parseInt(parts[1])==6) {
                 mIvWeatherInfo.setImageResource(R.drawable.fog);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.fog;
             } else if(Integer.parseInt(parts[1])==7) {
                 mIvWeatherInfo.setImageResource(R.drawable.cloudy);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.cloudy;
             } else if(Integer.parseInt(parts[1])==8) {
                 mIvWeatherInfo.setImageResource(R.drawable.partly_cloudy_day);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.partly_cloudy_day;
             } else if(Integer.parseInt(parts[1])==9) {
                 mIvWeatherInfo.setImageResource(R.drawable.partly_cloudy_night);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.partly_cloudy_night;
             } else if(Integer.parseInt(parts[1])==10) {
                 mIvWeatherInfo.setImageResource(R.drawable.hail);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.hail;
             } else if(Integer.parseInt(parts[1])==11) {
                 mIvWeatherInfo.setImageResource(R.drawable.thunderstorm);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.thunderstorm;
             } else if(Integer.parseInt(parts[1])==12) {
                 mIvWeatherInfo.setImageResource(R.drawable.tornado);
+                uri = "android.resource://" + getPackageName() + "/"
+                        + R.raw.tornado;
             }
+            VideoPlayController.getInstance().playVideo(mContext, mVvHomeBg, uri);
 
         }
 
@@ -179,8 +210,8 @@ public class MainActivity extends AppCompatActivity {
         mTvPrecipIntensity.setText(parts[2]+ " inch/h");
         mTvPrecipProbability.setText((int) (Float.parseFloat(parts[3])*100) +"%");
         mTvTemperature.setText(parts[4]);
-        mTvApparentTemperatureMax.setText("Max "+ parts[5]);
-        mTvApparentTemperatureMin.setText("Min "+parts[6]);
+        mTvApparentTemperatureMax.setText(" زیادہ سے زیادہ"+ parts[5]);
+        mTvApparentTemperatureMin.setText(" کم از کم"+parts[6]);
         mTvWindSpeed.setText(parts[8]);
         mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
 

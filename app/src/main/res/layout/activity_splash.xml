@@ -4,29 +4,40 @@
     tools:context="com.dapperapps.ciandroid.SplashActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_weight="2"
+    android:layout_centerVertical="true"
+    android:weightSum="3"
+    android:background="#80668cff"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal"
+        android:layout_margin="20dp"
+        android:layout_weight="2"
+        android:orientation="vertical"
         android:weightSum="2">
 
         <Button
             android:id="@+id/btn_today"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="Today" />
+            android:layout_marginBottom="5dp"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:background="@drawable/square_transparent_background"
+            android:text="آج موسم" />
 
         <Button
             android:id="@+id/btn_weekly"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/square_transparent_background"
             android:layout_weight="1"
-            android:text="Weekly" />
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            android:text="ہفتہ وار موسم" />
 
     </LinearLayout>
 
