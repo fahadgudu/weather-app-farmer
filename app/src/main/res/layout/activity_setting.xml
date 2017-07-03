@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <RelativeLayout
+        android:id="@+id/rl_audio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal"
+        android:padding="10dp">
+        <!--android:text="Rain Intensity"-->
+        <ImageView
+            android:id="@+id/iv_enter_phone"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_audio" />
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/iv_enter_phone"
+            android:background="@drawable/square_transparent_black_border_background"
+            android:gravity="right"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iv_help"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_help" />
+
+            <TextView
+                android:id="@+id/tv_audio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:layout_toLeftOf="@id/iv_help"
+                android:text="اطلاع موصول کریں"
+                android:textColor="#000000"
+                android:textSize="20dp" />
+        </RelativeLayout>
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_three_time_daily"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_audio"
+        android:layout_marginTop="30dp"
+        android:textColor="#000000"
+        android:textSize="20sp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#8E8E8E" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="20dp"
+            android:text="تین دفعہ روزانہ"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <Switch
+            android:id="@+id/switch_three_time_daily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/switch_three_time_daily"
+            android:background="#8E8E8E" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_daily"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_three_time_daily"
+        android:textColor="#000000"
+        android:textSize="20sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="20dp"
+            android:text="روزانہ"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <Switch
+            android:id="@+id/switch_daily"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/switch_daily"
+            android:background="#8E8E8E" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_weekly"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_daily"
+        android:textColor="#000000"
+        android:textSize="20sp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:padding="20dp"
+            android:text="ھفتہ وار"
+            android:textColor="#000000"
+            android:textSize="20sp" />
+
+        <Switch
+            android:id="@+id/switch_weekly"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="20dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/switch_weekly"
+            android:background="#8E8E8E" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/square_black_background"
+        android:text="محفوظ کریں"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+</RelativeLayout>

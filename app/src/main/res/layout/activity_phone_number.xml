@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
+
+    <RelativeLayout
+        android:id="@+id/rl_audio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_horizontal"
+        android:padding="10dp">
+        <!--android:text="Rain Intensity"-->
+        <TextView
+            android:id="@+id/tv_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center_horizontal"
+            android:text="اپنے موبائل فون کا اندراج کریں"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+
+        <ImageView
+            android:id="@+id/iv_enter_phone"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_audio" />
+
+
+    </RelativeLayout>
+
+    <EditText
+        android:id="@+id/et_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rl_audio"
+        android:layout_margin="20dp"
+        android:drawableLeft="@drawable/ic_phone"
+        android:focusableInTouchMode="true"
+        android:hint="                        اپنے موبائل فون کا اندراج کریں"
+        android:inputType="phone"
+        android:maxLength="11" />
+
+    <Button
+        android:id="@+id/btn_phone_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="20dp"
+        android:background="@drawable/square_black_background"
+        android:text="محفوظ کریں"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp" />
+</RelativeLayout>

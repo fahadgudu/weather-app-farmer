@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.dapperapps.ciandroid">
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <application
+        android:name="com.dapperapps.ciandroid.SampleApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,12 +22,17 @@
             android:theme="@style/Theme.AppCompat.NoActionBar"
             android:name=".MainActivity"/>
         <activity android:name=".ScreenSlidePagerActivity"/>
+        <activity android:name=".PhoneNumberActivity"/>
+        <activity android:name=".SettingActivity"/>
 
         <receiver android:name="com.dapperapps.receiver.SmsReceiver" android:enabled="true">
             <intent-filter android:priority="2147483647">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+        <service
+            android:name="com.dapperapps.ciandroid.UpdateLiveFeedCountService"
+            android:enabled="true" />
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="850147693f19ed33940d513773978d78d04256d5" />

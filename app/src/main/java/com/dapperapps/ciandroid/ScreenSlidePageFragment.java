@@ -17,6 +17,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import network.AppUtil;
+
 /**
  * Created by usman on 4/24/17.
  */
@@ -41,9 +43,12 @@ public class ScreenSlidePageFragment extends Fragment {
     TextView mTvWeatherSummary;
     TextView mTvWindValue;
     TextView mTvHumidityValue;
+    TextView mTvAudio;
 
     VideoView mVvHomeBg;
     String uri;
+
+    int audioFileNu;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +80,8 @@ public class ScreenSlidePageFragment extends Fragment {
         mTvWindSpeed = (TextView) rootView.findViewById(R.id.tv_wind_speed_value);
         mTvPrecipProbability = (TextView) rootView.findViewById(R.id.tv_rain_probility_value);
         mTvPrecipIntensity = (TextView) rootView.findViewById(R.id.tv_rain_intensity_value);
+
+        mTvAudio = (TextView) rootView.findViewById(R.id.tv_audio);
 
         mIvWeatherInfo.setImageResource(R.drawable.blizzard);
 
@@ -124,7 +131,8 @@ public class ScreenSlidePageFragment extends Fragment {
             mTvWindSpeed.setText(parts[8]);
             mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
 
-            mTvWeatherSummary.setText(parts[0].substring(1));
+            mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(1))));
+            audioFileNu = Integer.parseInt(parts[0].substring(1));
             if(parts[0].substring(1).toString().length()>10) {
                 mTvWeatherSummary.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
             }
@@ -203,6 +211,12 @@ public class ScreenSlidePageFragment extends Fragment {
             }
 
         }
+        mTvAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppUtil.playAudio(mContext, audioFileNu+".mp4");
+            }
+        });
         return rootView;
     }
     public static ScreenSlidePageFragment create(int pageNumber) {

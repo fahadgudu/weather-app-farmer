@@ -29,7 +29,7 @@
             android:gravity="center_horizontal"
             android:text="SummarySummarySummarySummarySummary"
             android:textColor="#FFFFFF"
-            android:textSize="30sp"
+            android:textSize="20sp"
             android:visibility="visible" />
 
         <LinearLayout
@@ -133,11 +133,35 @@
 
         </LinearLayout>
 
+
+        <RelativeLayout
+            android:id="@+id/rl_audio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:padding="10dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/square_transparent_background"
+            android:gravity="center_horizontal">
+            <!--android:text="Rain Intensity"-->
+            <TextView
+                android:id="@+id/tv_audio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="موسم کا حال جانیں"
+                android:layout_margin="10dp"
+                android:textColor="#FFFFFF"
+                android:textSize="16dp" />
+
+
+        </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/ll_weather_summary1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            android:layout_above="@id/rl_audio"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="20dp"
@@ -190,7 +214,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="بارش احتمال"
+                        android:text="بارش کا موقع"
                         android:textColor="#FFFFFF"
                         android:textSize="16dp" />
 

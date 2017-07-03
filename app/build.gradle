@@ -28,6 +28,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
     defaultConfig {
+        multiDexEnabled true
         applicationId "com.dapperapps.ciandroid"
         minSdkVersion 15
         targetSdkVersion 25
@@ -77,4 +78,13 @@ dependencies {
         transitive = true;
     }
     compile project(':ViewPagerLib')
+    compile 'com.karumi:dexter:4.1.0'
+    compile files('libs/converter-gson-2.1.0.jar')
+    compile files('libs/gson-2.7.jar')
+    compile files('libs/logging-interceptor-3.4.1.jar')
+    compile files('libs/okhttp-3.4.1.jar')
+    compile files('libs/okio-1.9.0.jar')
+    compile files('libs/retrofit-2.1.0.jar')
+    compile 'com.google.android.gms:play-services:11.0.2'
+    compile 'com.android.support:multidex:1.0.0'
 }

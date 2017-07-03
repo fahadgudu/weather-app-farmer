@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
+import network.AppUtil;
 
 import static com.dapperapps.receiver.WeatherConditions.mHmWeatherInfo;
 
@@ -49,7 +51,12 @@ public class MainActivity extends AppCompatActivity {
     TextView mTvWeatherSummary;
     TextView mTvWindValue;
     TextView mTvHumidityValue;
+
+    TextView mTvAudio;
+
     VideoView mVvHomeBg;
+
+    int audioFileNu;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,14 +79,22 @@ public class MainActivity extends AppCompatActivity {
         mTvWindSpeed = (TextView) findViewById(R.id.tv_wind_speed_value);
         mTvPrecipProbability = (TextView) findViewById(R.id.tv_rain_probility_value);
         mTvPrecipIntensity = (TextView) findViewById(R.id.tv_rain_intensity_value);
+        mTvAudio = (TextView) findViewById(R.id.tv_audio);
+
+
 
         mIvWeatherInfo.setImageResource(R.drawable.blizzard);
 
         mVvHomeBg = (VideoView) findViewById(R.id.vv_home_bg);
+        mTvAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppUtil.playAudio(mContext, audioFileNu+".mp4");
+            }
+        });
 
 
-
-        String str = "Sent from your Twillio trial account[ \"Dry:1:0:0:33:0:0:0.19:7.62:42\", \"Drizzle in the morning.:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"Mostly cloudy until afternoon and dry throughout the day.:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"Mostly cloudy until evening.:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"Mostly cloudy in the morning.:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"Drizzle in the morning.:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"Partly cloudy starting in the evening and dry throughout the day.:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"Partly cloudy starting in the evening and dry throughout the day.:9:0:0:0:37:22:0.25:5.35:24\", \"Dry throughout the day and partly cloudy in the afternoon.:8:0:0:0:38:23:0.2:2.77:51\" ]";
+        String str = "[ \"0:1:0:0:33:0:0:0.19:7.62:42\", \"1:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"2:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"3:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"4:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"5:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"6:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"12:9:0:0:0:37:22:0.25:5.35:24\", \"11:8:0:0:0:38:23:0.2:2.77:51\" ]";
         str = str.replaceAll("Sent from your Twillio trial account", "");
         AppPreference.saveValue(mContext, str, AppKeys.KEY_WEATHER_INFO);
 
@@ -95,8 +110,8 @@ public class MainActivity extends AppCompatActivity {
             mTvApparentTemperatureMin.setText(" کم از کم "+parts[6]);
             mTvWindSpeed.setText(parts[8]);
             mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
-
-            mTvWeatherSummary.setText(parts[0].substring(3));
+            audioFileNu = Integer.parseInt(parts[0].substring(3));
+            mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(3))));
             mTvTemperature.setText(parts[4]);
             mTvHumidityValue.setText((int) (Float.parseFloat(parts[7])*100) +"%");
             mTvWindValue.setText(parts[8]+" MPH");
@@ -172,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
             }
             VideoPlayController.getInstance().playVideo(mContext, mVvHomeBg, uri);
 
+
+
         }
 
 
@@ -191,19 +208,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
-//        summary
-//                icon
-//        precipIntensity
-//                precipProbability
-//        temperature
-//                apparentTemperatureMax
-//        apparentTemperatureMin
-//                humidity
-//        windSpeed
-//                windBearing
         AppPreference.saveValue(mContext, event.getMessage(), AppKeys.KEY_WEATHER_INFO);
-        //String str = event.getMessage();//"[ \"Dry:1:0:0:33:0:0:0.19:7.62:42\", \"Drizzle in the morning.:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"Mostly cloudy until afternoon and dry throughout the day.:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"Mostly cloudy until evening.:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"Mostly cloudy in the morning.:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"Drizzle in the morning.:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"Partly cloudy starting in the evening and dry throughout the day.:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"Partly cloudy starting in the evening and dry throughout the day.:9:0:0:0:37:22:0.25:5.35:24\", \"Dry throughout the day and partly cloudy in the afternoon.:8:0:0:0:38:23:0.2:2.77:51\" ]";
-        String str = "[ \"Dry:1:0:0:33:0:0:0.19:7.62:42\", \"Drizzle in the morning.:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"Mostly cloudy until afternoon and dry throughout the day.:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"Mostly cloudy until evening.:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"Mostly cloudy in the morning.:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"Drizzle in the morning.:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"Partly cloudy starting in the evening and dry throughout the day.:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"Partly cloudy starting in the evening and dry throughout the day.:9:0:0:0:37:22:0.25:5.35:24\", \"Dry throughout the day and partly cloudy in the afternoon.:8:0:0:0:38:23:0.2:2.77:51\" ]";
+        //String str = "[ \"0:1:0:0:33:0:0:0.19:7.62:42\", \"1:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"2:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"3:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"4:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"5:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"6:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"12:9:0:0:0:37:22:0.25:5.35:24\", \"11:8:0:0:0:38:23:0.2:2.77:51\" ]";
+        String str = event.getMessage();
         str = str.replaceAll("Sent from your Twillio trial account", "");
         List<String> items = Arrays.asList(str.split("\\s*,\\s*"));
         String[] parts = items.get(0).split(":");
@@ -215,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         mTvWindSpeed.setText(parts[8]);
         mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
 
-        mTvWeatherSummary.setText(parts[0].substring(3));
+        mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(3))));
         mTvTemperature.setText(parts[4]);
         mTvHumidityValue.setText((int) (Float.parseFloat(parts[7])*100) +"%");
         mTvWindValue.setText(parts[8]+" MPH");
