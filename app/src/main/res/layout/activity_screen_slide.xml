@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:paddingTop="40dp" />
 
     <com.viewpagerindicator.CirclePageIndicator
         android:id="@+id/viewpager_indicator"
@@ -20,4 +22,117 @@
         app:fillColor="#000000"
         app:pageColor="@android:color/transparent"
         app:radius="5dp" />
+
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="#42b6f4"
+        android:orientation="horizontal"
+        android:weightSum="7">
+
+        <TextView
+            android:id="@+id/tv_1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="موسم کا حال جانیں"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:background="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="موسم کا حال جانیں"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:background="#FFFFFF" />
+
+        <TextView
+            android:id="@+id/tv_3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="موسم کا حال جانیں"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:background="#FFFFFF" />
+        <TextView
+            android:id="@+id/tv_4"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_weight="1"
+            android:text="موسم کا حال جانیں"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:background="#FFFFFF" />
+        <TextView
+            android:id="@+id/tv_5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="موسم کا حال جانیں"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:background="#FFFFFF" />
+        <TextView
+            android:id="@+id/tv_6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="موسم کا حال جانیں"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="40dp"
+            android:layout_margin="2dp"
+            android:background="#FFFFFF" />
+        <TextView
+            android:id="@+id/tv_7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="موسم کا حال جانیں"
+            android:textColor="#FFFFFF"
+            android:textSize="16dp" />
+    </LinearLayout>
 </FrameLayout>

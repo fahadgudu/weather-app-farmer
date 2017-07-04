@@ -89,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="ہوا"
+                        android:text="ہوا کی رفتار"
                         android:textColor="#FFFFFF"
                         android:textSize="17dp" />
 
@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="نمی "
+                        android:text="نمی کا تناسب"
                         android:textColor="#FFFFFF"
                         android:textSize="17dp" />
 
@@ -149,10 +149,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
-                android:text="موسم کا حال جانیں"
+                android:text="موسم کا حال سنیں"
                 android:layout_margin="10dp"
                 android:textColor="#FFFFFF"
                 android:textSize="16dp" />
+
+            <ImageView
+                android:id="@+id/iv_enter_phone"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_audio" />
 
 
         </RelativeLayout>
@@ -186,7 +194,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="بارش شدت"
+                        android:text="بارش کی شدت"
                         android:textColor="#FFFFFF"
                         android:textSize="16dp" />
 
@@ -214,7 +222,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="بارش کا موقع"
+                        android:text="بارش کا تناسب"
                         android:textColor="#FFFFFF"
                         android:textSize="16dp" />
 

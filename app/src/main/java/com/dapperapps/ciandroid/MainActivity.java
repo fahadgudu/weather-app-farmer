@@ -15,6 +15,8 @@ import android.widget.VideoView;
 import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.dapperapps.receiver.MessageEvent;
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -57,6 +59,8 @@ public class MainActivity extends AppCompatActivity {
     VideoView mVvHomeBg;
 
     int audioFileNu;
+    String textName;
+    NiftyDialogBuilder dialogBuilder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +93,34 @@ public class MainActivity extends AppCompatActivity {
         mTvAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialogBuilder=NiftyDialogBuilder.getInstance(mContext);
+                dialogBuilder
+                        .withTitle(null)                                  //.withTitle(null)  no title
+                        .withTitleColor("#FFFFFF")                                  //def
+                        .withDividerColor("#11000000")                              //def
+                        .withMessage("\n\n\n\n\n"+textName+"\n\n\n\n\n")                     //.withMessage(null)  no Msg
+                        .withMessageColor("#FFFFFFFF")                              //def  | withMessageColor(int resid)
+                        .withDialogColor("#808080")                               //def  | withDialogColor(int resid)
+                        //.withIcon(getResources().getDrawable(R.drawable.icon))
+                        .withDuration(700)                                          //def
+                        .withEffect(Effectstype.SlideBottom)                                         //def Effectstype.Slidetop
+//                        .withButton1Text("OK")                                      //def gone
+                        .withButton2Text("بند کریں")                                  //def gone
+                        .isCancelableOnTouchOutside(true)                           //def    | isCancelable(true)
+                        //.setCustomView(R.layout.custom_view,v.getContext())         //.setCustomView(View or ResId,context)
+//                        .setButton1Click(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Toast.makeText(v.getContext(), "i'm btn1", Toast.LENGTH_SHORT).show();
+//                            }
+//                        })
+                        .setButton2Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogBuilder.dismiss();
+                            }
+                        })
+                        .show();
                 AppUtil.playAudio(mContext, audioFileNu+".mp4");
             }
         });
@@ -106,11 +138,12 @@ public class MainActivity extends AppCompatActivity {
             mTvPrecipIntensity.setText(parts[2]+ " inch/h");
             mTvPrecipProbability.setText((int) (Float.parseFloat(parts[3])*1) +"%");
             mTvTemperature.setText(parts[4]);
-            mTvApparentTemperatureMax.setText(" زیادہ سے زیادہ "+ parts[5]);
-            mTvApparentTemperatureMin.setText(" کم از کم "+parts[6]);
+            mTvApparentTemperatureMax.setText(" زیادہ درجہ حرارت "+(char) 0x00B0 + parts[5]);
+            mTvApparentTemperatureMin.setText(" کم درجہ حرارت "+(char) 0x00B0+parts[6]);
             mTvWindSpeed.setText(parts[8]);
             mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
             audioFileNu = Integer.parseInt(parts[0].substring(3));
+            textName=AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(3)));
             mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(3))));
             mTvTemperature.setText(parts[4]);
             mTvHumidityValue.setText((int) (Float.parseFloat(parts[7])*100) +"%");
@@ -217,8 +250,8 @@ public class MainActivity extends AppCompatActivity {
         mTvPrecipIntensity.setText(parts[2]+ " inch/h");
         mTvPrecipProbability.setText((int) (Float.parseFloat(parts[3])*100) +"%");
         mTvTemperature.setText(parts[4]);
-        mTvApparentTemperatureMax.setText(" زیادہ سے زیادہ"+ parts[5]);
-        mTvApparentTemperatureMin.setText(" کم از کم"+parts[6]);
+        mTvApparentTemperatureMax.setText(" زیادہ درجہ حرارت"+ parts[5]+"&#xb0; C");
+        mTvApparentTemperatureMin.setText(" کم درجہ حرارت"+parts[6]+"&#xb0; C");
         mTvWindSpeed.setText(parts[8]);
         mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
 

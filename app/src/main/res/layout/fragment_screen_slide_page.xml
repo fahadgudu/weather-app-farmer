@@ -48,7 +48,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/tv_weather_summary"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal"
             android:weightSum="2">
 
@@ -100,7 +100,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="ہوا"
+                        android:text="ہوا کی رفتار"
                         android:textColor="#FFFFFF"
                         android:textSize="17dp" />
 
@@ -126,7 +126,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
-                        android:text="نمی "
+                        android:text="نمی کا تناسب"
                         android:textColor="#FFFFFF"
                         android:textSize="17dp" />
 
@@ -143,36 +143,51 @@
             </RelativeLayout>
 
         </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/rl_audio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:padding="10dp"
-            android:layout_margin="10dp"
+            android:layout_margin="40dp"
             android:background="@drawable/square_transparent_background"
-            android:gravity="center_horizontal">
+            android:gravity="center_horizontal"
+            android:padding="10dp">
             <!--android:text="Rain Intensity"-->
             <TextView
                 android:id="@+id/tv_audio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="موسم کا حال جانیں"
                 android:layout_margin="10dp"
+                android:gravity="center_horizontal"
+                android:text="موسم کا حال سنیں"
                 android:textColor="#FFFFFF"
                 android:textSize="16dp" />
 
+            <ImageView
+                android:id="@+id/iv_enter_phone"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_audio" />
+            <View
+                android:layout_width="0.5dp"
+                android:layout_height="40dp"
+                android:layout_margin="2dp"
+                android:layout_toRightOf="@id/iv_enter_phone"
+                android:background="#FFFFFF" />
 
         </RelativeLayout>
+
         <LinearLayout
             android:id="@+id/ll_weather_summary1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@id/rl_audio"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_marginBottom="50dp"
             android:orientation="vertical">
 
             <LinearLayout
@@ -185,16 +200,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dp"
                     android:background="@drawable/square_transparent_background"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:padding="10dp">
                     <!--android:text="Rain Intensity"-->
                     <TextView
                         android:id="@+id/tv_rain_intensity"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="بارش شدت"
+                        android:text="بارش کی شدت"
                         android:textColor="#FFFFFF"
                         android:textSize="16dp" />
 
@@ -213,16 +228,16 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dp"
                     android:background="@drawable/square_transparent_background"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:padding="10dp">
                     <!--android:text="Rain Probility"-->
                     <TextView
                         android:id="@+id/tv_rain_probility"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="بارش احتمال"
+                        android:text="بارش کا تناسب"
                         android:textColor="#FFFFFF"
                         android:textSize="16dp" />
 
@@ -249,9 +264,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dp"
                     android:background="@drawable/square_transparent_background"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:padding="10dp">
                     <!--android:text="Wind Direction"-->
                     <TextView
                         android:id="@+id/tv_wind_speed"
@@ -279,9 +294,9 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:padding="10dp"
                     android:background="@drawable/square_transparent_background"
-                    android:gravity="center_horizontal">
+                    android:gravity="center_horizontal"
+                    android:padding="10dp">
 
                     <TextView
                         android:id="@+id/tv_temperature_max"

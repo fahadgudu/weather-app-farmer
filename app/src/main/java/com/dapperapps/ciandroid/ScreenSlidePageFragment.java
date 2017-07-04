@@ -13,6 +13,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.gitonway.lee.niftymodaldialogeffects.lib.Effectstype;
+import com.gitonway.lee.niftymodaldialogeffects.lib.NiftyDialogBuilder;
+
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
@@ -49,6 +52,9 @@ public class ScreenSlidePageFragment extends Fragment {
     String uri;
 
     int audioFileNu;
+
+    String textName;
+    NiftyDialogBuilder dialogBuilder;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,7 +105,7 @@ public class ScreenSlidePageFragment extends Fragment {
                 mTvCurrentDay.setText("اتوار");
                 break;
             case Calendar.MONDAY:
-                mTvCurrentDay.setText("سوموار");
+                mTvCurrentDay.setText("پیر");
                 break;
 
             case Calendar.TUESDAY:
@@ -126,11 +132,11 @@ public class ScreenSlidePageFragment extends Fragment {
             mTvPrecipIntensity.setText(parts[2]+ " inch/h");
             mTvPrecipProbability.setText((int) (Float.parseFloat(parts[3])*1) +"%");
             mTvTemperature.setText(parts[4]);
-            mTvApparentTemperatureMax.setText(" زیادہ سے زیادہ "+ parts[5]);
-            mTvApparentTemperatureMin.setText(" کم از کم "+parts[6]);
+            mTvApparentTemperatureMax.setText(" زیادہ درجہ حرارت "+(char) 0x00B0 + parts[5]);
+            mTvApparentTemperatureMin.setText(" کم درجہ حرارت "+(char) 0x00B0+parts[6]);
             mTvWindSpeed.setText(parts[8]);
             mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
-
+            textName=AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(1)));
             mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(1))));
             audioFileNu = Integer.parseInt(parts[0].substring(1));
             if(parts[0].substring(1).toString().length()>10) {
@@ -214,6 +220,34 @@ public class ScreenSlidePageFragment extends Fragment {
         mTvAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                dialogBuilder= NiftyDialogBuilder.getInstance(mContext);
+                dialogBuilder
+                        .withTitle(null)                                  //.withTitle(null)  no title
+                        .withTitleColor("#FFFFFF")                                  //def
+                        .withDividerColor("#11000000")                              //def
+                        .withMessage("\n\n\n\n\n"+textName+"\n\n\n\n\n")                     //.withMessage(null)  no Msg
+                        .withMessageColor("#FFFFFFFF")
+                        .withDialogColor("#808080")                               //def  | withDialogColor(int resid)
+                        //.withIcon(getResources().getDrawable(R.drawable.icon))
+                        .withDuration(700)                                          //def
+                        .withEffect(Effectstype.SlideBottom)                                         //def Effectstype.Slidetop
+//                        .withButton1Text("OK")                                      //def gone
+                        .withButton2Text("بند کریں")                                  //def gone
+                        .isCancelableOnTouchOutside(true)                           //def    | isCancelable(true)
+                        //.setCustomView(R.layout.custom_view,v.getContext())         //.setCustomView(View or ResId,context)
+//                        .setButton1Click(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View v) {
+//                                Toast.makeText(v.getContext(), "i'm btn1", Toast.LENGTH_SHORT).show();
+//                            }
+//                        })
+                        .setButton2Click(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                dialogBuilder.dismiss();
+                            }
+                        })
+                        .show();
                 AppUtil.playAudio(mContext, audioFileNu+".mp4");
             }
         });
