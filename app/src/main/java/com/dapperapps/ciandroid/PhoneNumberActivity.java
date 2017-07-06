@@ -83,7 +83,7 @@ public class PhoneNumberActivity extends Activity implements ServerConnectListen
         mIvEnterPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppUtil.playAudio(mContext, "0.mp4");
+                AppUtil.playAudio(mContext, "mobile_entry_screen.mp4");
 
 
             }

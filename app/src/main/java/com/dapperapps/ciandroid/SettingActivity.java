@@ -88,7 +88,7 @@ public class SettingActivity extends Activity implements ServerConnectListenerOb
         mIvEnterPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppUtil.playAudio(mContext, "0.mp4");
+                AppUtil.playAudio(mContext, "menu_down_options.mp4");
 
 
             }

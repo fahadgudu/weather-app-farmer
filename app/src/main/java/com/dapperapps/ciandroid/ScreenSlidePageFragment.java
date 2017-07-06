@@ -52,7 +52,7 @@ public class ScreenSlidePageFragment extends Fragment {
     String uri;
 
     int audioFileNu;
-
+    ImageView mIvWeather;
     String textName;
     NiftyDialogBuilder dialogBuilder;
 
@@ -88,7 +88,7 @@ public class ScreenSlidePageFragment extends Fragment {
         mTvPrecipIntensity = (TextView) rootView.findViewById(R.id.tv_rain_intensity_value);
 
         mTvAudio = (TextView) rootView.findViewById(R.id.tv_audio);
-
+        mIvWeather = (ImageView) rootView.findViewById(R.id.iv_enter_phone);
         mIvWeatherInfo.setImageResource(R.drawable.blizzard);
 
         mVvHomeBg = (VideoView) rootView.findViewById(R.id.vv_home_bg);
@@ -131,7 +131,7 @@ public class ScreenSlidePageFragment extends Fragment {
             String[] parts = items.get(mPageNumber+1).split(":");
             mTvPrecipIntensity.setText(parts[2]+ " inch/h");
             mTvPrecipProbability.setText((int) (Float.parseFloat(parts[3])*1) +"%");
-            mTvTemperature.setText(parts[4]);
+            mTvTemperature.setText(parts[5]);
             mTvApparentTemperatureMax.setText(" زیادہ درجہ حرارت "+(char) 0x00B0 + parts[5]);
             mTvApparentTemperatureMin.setText(" کم درجہ حرارت "+(char) 0x00B0+parts[6]);
             mTvWindSpeed.setText(parts[8]);
@@ -142,18 +142,17 @@ public class ScreenSlidePageFragment extends Fragment {
             if(parts[0].substring(1).toString().length()>10) {
                 mTvWeatherSummary.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
             }
-            mTvTemperature.setText(parts[4]);
             mTvHumidityValue.setText((int) (Float.parseFloat(parts[7])*100) +"%");
             mTvWindValue.setText(parts[8]+" MPH");
 
-            if(Integer.parseInt(parts[4])<3) {
+            if(Integer.parseInt(parts[5])<3) {
                 //blue
                 mRlWeather.setBackgroundColor(Color.parseColor("#80668cff"));
             }
-            else if(Integer.parseInt(parts[4])>3 && Integer.parseInt(parts[4])<10) {
+            else if(Integer.parseInt(parts[5])>3 && Integer.parseInt(parts[5])<=10) {
                 //dark blue
                 mRlWeather.setBackgroundColor(Color.parseColor("#803333ff"));
-            } else if (Integer.parseInt(parts[4])>10&&Integer.parseInt(parts[4])<30) {
+            } else if (Integer.parseInt(parts[5])>10&&Integer.parseInt(parts[5])<30) {
                 //orange
                 mRlWeather.setBackgroundColor(Color.parseColor("#80ffa500"));
             } else {
@@ -163,7 +162,7 @@ public class ScreenSlidePageFragment extends Fragment {
             uri = "android.resource://" + getActivity().getPackageName() + "/"
                     + R.raw.sleet;
             if(Integer.parseInt(parts[1])==0) {
-                mIvWeatherInfo.setImageResource(R.drawable.clear_day);
+                    mIvWeatherInfo.setImageResource(R.drawable.clear_day);
                 uri = "android.resource://" + getActivity().getPackageName() + "/"
                         + R.raw.clear_day;
             } else if(Integer.parseInt(parts[1])==1) {
@@ -217,6 +216,12 @@ public class ScreenSlidePageFragment extends Fragment {
             }
 
         }
+        mIvWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppUtil.playAudio(mContext, "detailed_weather_info.mp4");
+            }
+        });
         mTvAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

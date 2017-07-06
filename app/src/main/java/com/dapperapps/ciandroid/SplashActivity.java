@@ -127,28 +127,28 @@ public class SplashActivity extends Activity implements ServerConnectListener {
         mIvToday.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppUtil.playAudio(mContext, "0.mp4");
+                AppUtil.playAudio(mContext, "daily_weather.mp4");
 
             }
         });
         mIvWeekly.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppUtil.playAudio(mContext, "0.mp4");
+                AppUtil.playAudio(mContext, "weeky_weather_info.mp4");
 
             }
         });
         mIvSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppUtil.playAudio(mContext, "0.mp4");
+                AppUtil.playAudio(mContext, "settings_screen_options.mp4");
 
             }
         });
         mIvPhoneNumber.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AppUtil.playAudio(mContext, "0.mp4");
+                AppUtil.playAudio(mContext, "weather_mobile_phone.mp4");
 
             }
         });

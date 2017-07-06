@@ -55,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     TextView mTvHumidityValue;
 
     TextView mTvAudio;
+    ImageView mIvWeather;
 
     VideoView mVvHomeBg;
 
@@ -84,12 +85,19 @@ public class MainActivity extends AppCompatActivity {
         mTvPrecipProbability = (TextView) findViewById(R.id.tv_rain_probility_value);
         mTvPrecipIntensity = (TextView) findViewById(R.id.tv_rain_intensity_value);
         mTvAudio = (TextView) findViewById(R.id.tv_audio);
+        mIvWeather = (ImageView) findViewById(R.id.iv_enter_phone);
 
 
 
         mIvWeatherInfo.setImageResource(R.drawable.blizzard);
 
         mVvHomeBg = (VideoView) findViewById(R.id.vv_home_bg);
+        mIvWeather.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppUtil.playAudio(mContext, "detailed_weather_info.mp4");
+            }
+        });
         mTvAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                         .withTitle(null)                                  //.withTitle(null)  no title
                         .withTitleColor("#FFFFFF")                                  //def
                         .withDividerColor("#11000000")                              //def
-                        .withMessage("\n\n\n\n\n"+textName+"\n\n\n\n\n")                     //.withMessage(null)  no Msg
+                        .withMessage("\n\n\n\n\n\n\n\n"+textName+"\n\n\n\n\n\n\n\n")                     //.withMessage(null)  no Msg
                         .withMessageColor("#FFFFFFFF")                              //def  | withMessageColor(int resid)
                         .withDialogColor("#808080")                               //def  | withDialogColor(int resid)
                         //.withIcon(getResources().getDrawable(R.drawable.icon))
@@ -126,7 +134,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        String str = "[ \"0:1:0:0:33:0:0:0.19:7.62:42\", \"1:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"2:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"3:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"4:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"5:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"6:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"12:9:0:0:0:37:22:0.25:5.35:24\", \"11:8:0:0:0:38:23:0.2:2.77:51\" ]";
+        //String str = "[ \"0:1:0:0:33:0:0:0.19:7.62:42\", \"1:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"2:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"3:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"4:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"5:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"6:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"12:9:0:0:0:37:22:0.25:5.35:24\", \"11:8:0:0:0:38:23:0.2:2.77:51\" ]";
+        String str = "[ \"1:1:0.0235:6.0:10:10:8:0.44:5.55:172\", \"2:2:0.0083:38.0:0:38:29:0.5:3.9:104\",\"3:3:0.0021:16.0:0:39:27:0.48:4.03:111\",\"4:4:0.0067:22.0:0:12:27:0.5:3.67:130\",\"5:5:0.0003:1.0:0:50:29:0.48:3.49:108\",\"6:6:0.0043:9.0:0:43:31:0.43:2.11:140\",\"7:7:0.0186:41.0:0:20:28:0.63:6.83:124\",\"8:8:0.0291:38.0:0:25:27:0.76:8.01:113\",\"9:9:0.0791:63.0:0:0:24:0.82:8.3:109\" ]";
+
         str = str.replaceAll("Sent from your Twillio trial account", "");
         AppPreference.saveValue(mContext, str, AppKeys.KEY_WEATHER_INFO);
 
@@ -153,7 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 //blue
                 mRlWeather.setBackgroundColor(Color.parseColor("#80668cff"));
             }
-            else if(Integer.parseInt(parts[4])>3 && Integer.parseInt(parts[4])<10) {
+            else if(Integer.parseInt(parts[4])>3 && Integer.parseInt(parts[4])<=10) {
                 //dark blue
                 mRlWeather.setBackgroundColor(Color.parseColor("#803333ff"));
             } else if (Integer.parseInt(parts[4])>10&&Integer.parseInt(parts[4])<30) {
