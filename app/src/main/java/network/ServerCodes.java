@@ -1,8 +1,5 @@
 package network;
 
-/**
- * Created by Wahib on 12/31/2015.
- */
 public class ServerCodes {
 
     public static final class ServerRequestCodes {

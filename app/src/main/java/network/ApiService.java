@@ -21,5 +21,9 @@ public interface ApiService {
     @POST(AppWebServices.API_WEATHER_UPDATE)
     Call<Object> updateSetting(@Body WeatherRequest registeredRequest);
 
+    @POST(AppWebServices.API_WEATHERS)
+    Call<Object> getWeathers(@Body WeatherRequest registeredRequest);
+
+
 
 }

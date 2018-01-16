@@ -22,6 +22,9 @@ public class WeatherRequest {
     }
 
     public class User {
+        @SerializedName("device_token")
+        @Expose
+        private String device_token;
         @SerializedName("user_id")
         @Expose
         private int user_id;
@@ -68,6 +71,14 @@ public class WeatherRequest {
 
         public void setWeekly(boolean weekly) {
             this.weekly = weekly;
+        }
+
+        public String getDevice_token() {
+            return device_token;
+        }
+
+        public void setDevice_token(String device_token) {
+            this.device_token = device_token;
         }
     }
 }

@@ -45,8 +45,10 @@ public class RestCallbackObject<T> implements Callback {
                 JSONObject obj = new JSONObject(s);
                 listener.onSuccess(response.body());
             } catch (Exception e) {
-                listener.onSuccess(response.body());
+                listener.onSuccess(response.body().toString());
             }
+        } else {
+            listener.onFailure(null);
         }
     }
 

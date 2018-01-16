@@ -1,11 +1,18 @@
 package com.dapperapps.ciandroid;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -32,11 +39,18 @@ import java.util.List;
 import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
+import network.AppConstants;
 import network.AppUtil;
+import network.RestCallbackObject;
+import network.ServerCodes;
+import network.ServerConnectListenerObject;
+import network.SharedPrefUtility;
+import network.WeatherRequest;
+import retrofit2.Call;
 
 import static com.dapperapps.receiver.WeatherConditions.mHmWeatherInfo;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ServerConnectListenerObject {
 
     Context mContext;
     TextView mTvWeatherInfo;
@@ -133,9 +147,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        showProgressDialog("...", 100);
+        WeatherRequest obj = new WeatherRequest();
+        WeatherRequest.User user = obj.new User();
+//        user.setLatitude("" + mLocation.getLatitude());
+//        user.setLongitude("" + mLocation.getLongitude());
+        user.setUser_id(SharedPrefUtility.getInstance(mContext).getIntValue(AppConstants.USER_ID));
+        user.setDevice_token(Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID));
+        obj.setUser(user);
 
+        Call<Object> call = SampleApplication.getRestClient().getApiService().getWeathers(obj);
+        call.enqueue(new RestCallbackObject<Object>(this, ServerCodes.ServerRequestCodes.LOGIN_REQUEST_CODE,
+                SampleApplication.getAppContext()));
+        showData("[ \"1:1:0.0235:6.0:10:10:8:0.44:5.55:172\", \"2:2:0.0083:38.0:0:38:29:0.5:3.9:104\",\"3:3:0.0021:16.0:0:39:27:0.48:4.03:111\",\"4:4:0.0067:22.0:0:12:27:0.5:3.67:130\",\"5:5:0.0003:1.0:0:50:29:0.48:3.49:108\",\"6:6:0.0043:9.0:0:43:31:0.43:2.11:140\",\"7:7:0.0186:41.0:0:20:28:0.63:6.83:124\",\"8:8:0.0291:38.0:0:25:27:0.76:8.01:113\",\"9:9:0.0791:63.0:0:0:24:0.82:8.3:109\" ]");
+
+
+    }
+    private ProgressDialog mProgressDialog;
+    private void showProgressDialog(String text, int progress) {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage(text);
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setMax(progress);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+    private void showData(String str) {
         //String str = "[ \"0:1:0:0:33:0:0:0.19:7.62:42\", \"1:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"2:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"3:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"4:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"5:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"6:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"12:9:0:0:0:37:22:0.25:5.35:24\", \"11:8:0:0:0:38:23:0.2:2.77:51\" ]";
-        String str = "[ \"1:1:0.0235:6.0:10:10:8:0.44:5.55:172\", \"2:2:0.0083:38.0:0:38:29:0.5:3.9:104\",\"3:3:0.0021:16.0:0:39:27:0.48:4.03:111\",\"4:4:0.0067:22.0:0:12:27:0.5:3.67:130\",\"5:5:0.0003:1.0:0:50:29:0.48:3.49:108\",\"6:6:0.0043:9.0:0:43:31:0.43:2.11:140\",\"7:7:0.0186:41.0:0:20:28:0.63:6.83:124\",\"8:8:0.0291:38.0:0:25:27:0.76:8.01:113\",\"9:9:0.0791:63.0:0:0:24:0.82:8.3:109\" ]";
 
         str = str.replaceAll("Sent from your Twillio trial account", "");
         AppPreference.saveValue(mContext, str, AppKeys.KEY_WEATHER_INFO);
@@ -152,9 +192,12 @@ public class MainActivity extends AppCompatActivity {
             mTvApparentTemperatureMin.setText(" کم درجہ حرارت "+(char) 0x00B0+parts[6]);
             mTvWindSpeed.setText(parts[8]);
             mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
-            audioFileNu = Integer.parseInt(parts[0].substring(3));
-            textName=AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(3)));
-            mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(3))));
+            parts[0] = parts[0].replaceAll("\"", "");
+            parts[0] = parts[0].replaceAll("\\[", "");
+            parts[0] = parts[0].replaceAll(" ", "");
+            audioFileNu = Integer.parseInt(parts[0]);
+            textName=AppUtil.getWeatherSummary(Integer.parseInt(parts[0]));
+            mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0])));
             mTvTemperature.setText(parts[4]);
             mTvHumidityValue.setText((int) (Float.parseFloat(parts[7])*100) +"%");
             mTvWindValue.setText(parts[8]+" MPH");
@@ -233,8 +276,6 @@ public class MainActivity extends AppCompatActivity {
 
 
         }
-
-
     }
 
     @Override
@@ -311,5 +352,20 @@ public class MainActivity extends AppCompatActivity {
         } else if(Integer.parseInt(parts[1])==12) {
             mIvWeatherInfo.setImageResource(R.drawable.tornado);
         }
+    }
+
+    @Override
+    public void onSuccess(Object response) {
+        if (mProgressDialog != null) {
+            mProgressDialog.hide();
+        }
+        showData(response.toString());
+    }
+    @Override
+    public void onFailure(Throwable response) {
+        if (mProgressDialog != null) {
+            mProgressDialog.hide();
+        }
+
     }
 }

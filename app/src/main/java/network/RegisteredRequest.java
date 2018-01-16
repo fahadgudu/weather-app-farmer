@@ -22,6 +22,9 @@ public class RegisteredRequest {
     }
 
     public class User {
+        @SerializedName("device_token")
+        @Expose
+        private String device_token;
         @SerializedName("latitude")
         @Expose
         private String latitude;
@@ -56,6 +59,14 @@ public class RegisteredRequest {
 
         public void setMobile_number(String mobile_number) {
             this.mobile_number = mobile_number;
+        }
+
+        public String getDevice_token() {
+            return device_token;
+        }
+
+        public void setDevice_token(String device_token) {
+            this.device_token = device_token;
         }
     }
 }

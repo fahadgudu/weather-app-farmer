@@ -2,8 +2,14 @@ package com.dapperapps.ciandroid;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -97,11 +103,14 @@ public class SettingActivity extends Activity implements ServerConnectListenerOb
 
 
     private void requestRegister() {
+        showProgressDialog("...", 100);
         WeatherRequest obj = new WeatherRequest();
         WeatherRequest.User user = obj.new User();
 //        user.setLatitude("" + mLocation.getLatitude());
 //        user.setLongitude("" + mLocation.getLongitude());
         user.setUser_id(SharedPrefUtility.getInstance(mContext).getIntValue(AppConstants.USER_ID));
+        user.setDevice_token(Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID));
         user.setAfter_four_hours(mSwitchThreeTimesDaily.isChecked());
         user.setDaily(mSwitchDaily.isChecked());
         user.setWeekly(mSwitchWeekly.isChecked());
@@ -125,11 +134,66 @@ public class SettingActivity extends Activity implements ServerConnectListenerOb
 //        bundle.putInt(AppBundles.MESSAGES_COUNT.getKey(), notificationsCountObj.getData().getMessagesCount());
 //        EventsListeners.getInstance().broadCastEvent(
 //                ListinerCategory.HOME_MENU_NEW, ChangeEvents.NOTIFICATIONS_COUNT, bundle);
-        this.finish();
-    }
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (SettingActivity.this.mProgressDialog != null) {
+                    SettingActivity.this.mProgressDialog.hide();
+                }
+                AlertDialog alertDialog = new AlertDialog.Builder(SettingActivity.this).create();
+//        alertDialog.setTitle("Alert");
+                alertDialog.setMessage("آپ کا انتخاب محفوظ ہو گیا ہے");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "بند کریں",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                SettingActivity.this.finish();
+                            }
+                        });
+                alertDialog.show();
 
+
+            } // This is your code
+        };
+        mainHandler.postDelayed(myRunnable, 2000);
+    }
+    private ProgressDialog mProgressDialog;
+    private void showProgressDialog(String text, int progress) {
+        mProgressDialog = new ProgressDialog(mContext);
+        mProgressDialog.setMessage(text);
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setMax(progress);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
     @Override
     public void onFailure(Throwable response) {
+
+        Handler mainHandler = new Handler(Looper.getMainLooper());
+        Runnable myRunnable = new Runnable() {
+            @Override
+            public void run() {
+                if (SettingActivity.this.mProgressDialog != null) {
+                    SettingActivity.this.mProgressDialog.hide();
+                }
+                android.app.AlertDialog alertDialog = new android.app.AlertDialog.Builder(SettingActivity.this).create();
+//        alertDialog.setTitle("Alert");
+                alertDialog.setMessage("آپ کا انتخاب پہلے ہی محفوظ ہے");
+                alertDialog.setButton(android.app.AlertDialog.BUTTON_NEUTRAL, "بند کریں",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                SettingActivity.this.finish();
+                            }
+                        });
+                alertDialog.show();
+
+
+            } // This is your code
+        };
+        mainHandler.postDelayed(myRunnable, 2000);
 
     }
 
