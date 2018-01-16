@@ -1,6 +1,8 @@
 package com.dapperapps.ciandroid;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -17,11 +19,19 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
+import network.AppConstants;
+import network.RestCallbackObject;
+import network.ServerCodes;
+import network.ServerConnectListenerObject;
+import network.SharedPrefUtility;
+import network.WeatherRequest;
+import retrofit2.Call;
+
 /**
  * Created by usman on 4/24/17.
  */
 
-public class ScreenSlidePagerActivity extends FragmentActivity {
+public class ScreenSlidePagerActivity extends FragmentActivity implements ServerConnectListenerObject {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
@@ -52,6 +62,60 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_screen_slide);
+
+
+        showProgressDialog("...", 100);
+        WeatherRequest obj = new WeatherRequest();
+        WeatherRequest.User user = obj.new User();
+//        user.setLatitude("" + mLocation.getLatitude());
+//        user.setLongitude("" + mLocation.getLongitude());
+        user.setUser_id(SharedPrefUtility.getInstance(this).getIntValue(AppConstants.USER_ID));
+        user.setDevice_token(Settings.Secure.getString(this.getContentResolver(),
+                Settings.Secure.ANDROID_ID));
+        obj.setUser(user);
+
+        Call<Object> call = SampleApplication.getRestClient().getApiService().getWeathers(obj);
+        call.enqueue(new RestCallbackObject<Object>(this, ServerCodes.ServerRequestCodes.LOGIN_REQUEST_CODE,
+                SampleApplication.getAppContext()));
+    }
+    private ProgressDialog mProgressDialog;
+    private void showProgressDialog(String text, int progress) {
+        mProgressDialog = new ProgressDialog(this);
+        mProgressDialog.setMessage(text);
+        mProgressDialog.setIndeterminate(false);
+        mProgressDialog.setMax(progress);
+        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        mProgressDialog.setCancelable(false);
+        mProgressDialog.show();
+    }
+    /**
+     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
+     * sequence.
+     */
+    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public ScreenSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return ScreenSlidePageFragment.create(position);
+        }
+
+        @Override
+        public int getCount() {
+            return NUM_PAGES;
+        }
+    }
+
+    @Override
+    public void onSuccess(Object response) {
+        if (mProgressDialog != null) {
+            mProgressDialog.hide();
+        }
+        AppPreference.saveValue(this, response.toString(), AppKeys.KEY_WEATHER_INFO);
+
+
         String str = AppPreference.getValue(this, AppKeys.KEY_WEATHER_INFO);
         List<String> items = Arrays.asList(str.split("\\s*,\\s*"));
         NUM_PAGES = items.size() - 1;
@@ -197,26 +261,14 @@ public class ScreenSlidePagerActivity extends FragmentActivity {
                 mPager.setCurrentItem(6);
             }
         });
+
     }
-
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
+    @Override
+    public void onFailure(Throwable response) {
+        if (mProgressDialog != null) {
+            mProgressDialog.hide();
         }
 
-        @Override
-        public Fragment getItem(int position) {
-            return ScreenSlidePageFragment.create(position);
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
     }
 
 }

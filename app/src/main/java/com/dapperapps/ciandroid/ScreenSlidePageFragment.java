@@ -125,6 +125,11 @@ public class ScreenSlidePageFragment extends Fragment {
                 break;
         }
 
+        showData();
+        return rootView;
+    }
+
+    private void showData() {
         if (AppPreference.getValue(mContext, AppKeys.KEY_WEATHER_INFO) != null) {
             String str = AppPreference.getValue(mContext, AppKeys.KEY_WEATHER_INFO);
             List<String> items = Arrays.asList(str.split("\\s*,\\s*"));
@@ -136,10 +141,13 @@ public class ScreenSlidePageFragment extends Fragment {
             mTvApparentTemperatureMin.setText(" کم درجہ حرارت "+(char) 0x00B0+parts[6]);
             mTvWindSpeed.setText(parts[8]);
             mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
-            textName=AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(1)));
-            mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(1))));
-            audioFileNu = Integer.parseInt(parts[0].substring(1));
-            if(parts[0].substring(1).toString().length()>10) {
+            parts[0] = parts[0].replaceAll("\"", "");
+            parts[0] = parts[0].replaceAll("\\[", "");
+            parts[0] = parts[0].replaceAll(" ", "");
+            textName=AppUtil.getWeatherSummary(Integer.parseInt(parts[0]));
+            mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0])));
+            audioFileNu = Integer.parseInt(parts[0]);
+            if(parts[0].toString().length()>10) {
                 mTvWeatherSummary.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
             }
             mTvHumidityValue.setText((int) (Float.parseFloat(parts[7])*100) +"%");
@@ -162,7 +170,7 @@ public class ScreenSlidePageFragment extends Fragment {
             uri = "android.resource://" + getActivity().getPackageName() + "/"
                     + R.raw.sleet;
             if(Integer.parseInt(parts[1])==0) {
-                    mIvWeatherInfo.setImageResource(R.drawable.clear_day);
+                mIvWeatherInfo.setImageResource(R.drawable.clear_day);
                 uri = "android.resource://" + getActivity().getPackageName() + "/"
                         + R.raw.clear_day;
             } else if(Integer.parseInt(parts[1])==1) {
@@ -256,8 +264,8 @@ public class ScreenSlidePageFragment extends Fragment {
                 AppUtil.playAudio(mContext, audioFileNu+".mp4");
             }
         });
-        return rootView;
     }
+
     public static ScreenSlidePageFragment create(int pageNumber) {
         ScreenSlidePageFragment fragment = new ScreenSlidePageFragment();
         Bundle args = new Bundle();
