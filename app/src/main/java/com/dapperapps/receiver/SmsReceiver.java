@@ -7,6 +7,9 @@ import android.os.Bundle;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+import com.dapperapps.ciandroid.AppKeys;
+import com.dapperapps.ciandroid.AppPreference;
+
 import org.greenrobot.eventbus.EventBus;
 
 /**
@@ -16,7 +19,7 @@ import org.greenrobot.eventbus.EventBus;
 public class SmsReceiver extends BroadcastReceiver {
 
     private static final String SMS_RECEIVED = "android.provider.Telephony.SMS_RECEIVED";
-    private static final String SENDER = "SMS";
+    private static final String SENDER = "+38598123456";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -38,6 +41,7 @@ public class SmsReceiver extends BroadcastReceiver {
                 String sender = messages[0].getOriginatingAddress();
                 String message = sb.toString();
                 if(sender.equalsIgnoreCase(SENDER)) {
+                    AppPreference.saveValue(context, message, AppKeys.KEY_WEATHER_INFO);
                     EventBus.getDefault().post(new MessageEvent(message));
                 }
                 //Toast.makeText(context, message, Toast.LENGTH_SHORT).show();

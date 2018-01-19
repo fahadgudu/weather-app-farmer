@@ -293,65 +293,7 @@ public class MainActivity extends AppCompatActivity implements ServerConnectList
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(MessageEvent event) {
         AppPreference.saveValue(mContext, event.getMessage(), AppKeys.KEY_WEATHER_INFO);
-        //String str = "[ \"0:1:0:0:33:0:0:0.19:7.62:42\", \"1:2:0.0021:40.0:0:40:26:0.17:5.23:39\", \"2:8:0.0005:9.0:0:44:27:0.21:8.75:36\", \"3:8:0.0029:16.0:0:43:28:0.28:10.23:43\", \"4:8:0.0022:20.0:0:41:25:0.31:5.47:61\", \"5:2:0.0025:31.0:0:39:23:0.34:0.74:221\", \"6:9:0.0014:13.0:0:37:23:0.29:1.24:178\", \"12:9:0:0:0:37:22:0.25:5.35:24\", \"11:8:0:0:0:38:23:0.2:2.77:51\" ]";
-        String str = event.getMessage();
-        str = str.replaceAll("Sent from your Twillio trial account", "");
-        List<String> items = Arrays.asList(str.split("\\s*,\\s*"));
-        String[] parts = items.get(0).split(":");
-        mTvPrecipIntensity.setText(parts[2]+ " inch/h");
-        mTvPrecipProbability.setText((int) (Float.parseFloat(parts[3])*100) +"%");
-        mTvTemperature.setText(parts[4]);
-        mTvApparentTemperatureMax.setText(" زیادہ درجہ حرارت"+ parts[5]+"&#xb0; C");
-        mTvApparentTemperatureMin.setText(" کم درجہ حرارت"+parts[6]+"&#xb0; C");
-        mTvWindSpeed.setText(parts[8]);
-        mTvWindSpeed.setText(parts[9].substring(0, parts[9].length()-1));
-
-        mTvWeatherSummary.setText(AppUtil.getWeatherSummary(Integer.parseInt(parts[0].substring(3))));
-        mTvTemperature.setText(parts[4]);
-        mTvHumidityValue.setText((int) (Float.parseFloat(parts[7])*100) +"%");
-        mTvWindValue.setText(parts[8]+" MPH");
-
-        if(Integer.parseInt(parts[4])<3) {
-            //blue
-            mRlWeather.setBackgroundColor(Color.parseColor("#668cff"));
-        }
-        else if(Integer.parseInt(parts[4])>3 && Integer.parseInt(parts[4])<10) {
-            //dark blue
-            mRlWeather.setBackgroundColor(Color.parseColor("#3333ff"));
-        } else if (Integer.parseInt(parts[4])>10&&Integer.parseInt(parts[4])<30) {
-            //orange
-            mRlWeather.setBackgroundColor(Color.parseColor("#ffa500"));
-        } else {
-            //red
-            mRlWeather.setBackgroundColor(Color.parseColor("#CCff0000"));
-        }
-        if(Integer.parseInt(parts[1])==0) {
-            mIvWeatherInfo.setImageResource(R.drawable.clear_day);
-        } else if(Integer.parseInt(parts[1])==1) {
-            mIvWeatherInfo.setImageResource(R.drawable.clear_night);
-        } else if(Integer.parseInt(parts[1])==2) {
-            mIvWeatherInfo.setImageResource(R.drawable.rain);
-        } else if(Integer.parseInt(parts[1])==3) {
-            mIvWeatherInfo.setImageResource(R.drawable.snow);
-        } else if(Integer.parseInt(parts[1])==4) {
-            mIvWeatherInfo.setImageResource(R.drawable.sleet);
-        } else if(Integer.parseInt(parts[1])==5) {
-            mIvWeatherInfo.setImageResource(R.drawable.wind);
-        } else if(Integer.parseInt(parts[1])==6) {
-            mIvWeatherInfo.setImageResource(R.drawable.fog);
-        } else if(Integer.parseInt(parts[1])==7) {
-            mIvWeatherInfo.setImageResource(R.drawable.cloudy);
-        } else if(Integer.parseInt(parts[1])==8) {
-            mIvWeatherInfo.setImageResource(R.drawable.partly_cloudy_day);
-        } else if(Integer.parseInt(parts[1])==9) {
-            mIvWeatherInfo.setImageResource(R.drawable.partly_cloudy_night);
-        } else if(Integer.parseInt(parts[1])==10) {
-            mIvWeatherInfo.setImageResource(R.drawable.hail);
-        } else if(Integer.parseInt(parts[1])==11) {
-            mIvWeatherInfo.setImageResource(R.drawable.thunderstorm);
-        } else if(Integer.parseInt(parts[1])==12) {
-            mIvWeatherInfo.setImageResource(R.drawable.tornado);
-        }
+        showData(AppPreference.getValue(mContext, AppKeys.KEY_WEATHER_INFO));
     }
 
     @Override
@@ -366,6 +308,6 @@ public class MainActivity extends AppCompatActivity implements ServerConnectList
         if (mProgressDialog != null) {
             mProgressDialog.hide();
         }
-
+        showData(AppPreference.getValue(mContext, AppKeys.KEY_WEATHER_INFO));
     }
 }

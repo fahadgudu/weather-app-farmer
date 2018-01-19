@@ -116,6 +116,10 @@ public class ScreenSlidePagerActivity extends FragmentActivity implements Server
         AppPreference.saveValue(this, response.toString(), AppKeys.KEY_WEATHER_INFO);
 
 
+        showData();
+
+    }
+    public void showData() {
         String str = AppPreference.getValue(this, AppKeys.KEY_WEATHER_INFO);
         List<String> items = Arrays.asList(str.split("\\s*,\\s*"));
         NUM_PAGES = items.size() - 1;
@@ -268,6 +272,7 @@ public class ScreenSlidePagerActivity extends FragmentActivity implements Server
         if (mProgressDialog != null) {
             mProgressDialog.hide();
         }
+        showData();
 
     }
 
